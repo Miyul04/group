@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+    // Function to update totals when quantity changes
+    function updateTotals() {
+        const rows = document.querySelectorAll(".cart-table tbody tr");
+        let grandTotal = 0;
+
+        rows.forEach(row => {
+            const quantityInput = row.querySelector(".quantity-input");
+            const priceCell = row.querySelector("td:nth-child(4)");
+            const totalCell = row.querySelector("td:nth-child(5)");
+
+            const quantity = parseInt(quantityInput.value, 10);
+            const price = parseFloat(priceCell.textContent.replace("$", ""));
+            const total = quantity * price;
+
+            totalCell.textContent = `$${total.toFixed(2)}`;
+            grandTotal += total;
+        });
+
+        // Update the grand total
+        document.querySelector(".grand-total").textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    // Function to remove a row from the cart
+    function removeItem(event) {
+        const row = event.target.closest("tr");
+        row.remove(); // Remove the selected row
+        updateTotals(); // Recalculate totals after removal
+    }
+
+    // Add event listeners to all quantity inputs and remove buttons
+    function initializeCart() {
+        const quantityInputs = document.querySelectorAll(".quantity-input");
+        const removeButtons = document.querySelectorAll(".remove-btn");
+
+        // Listen for changes in quantity inputs
+        quantityInputs.forEach(input => {
+            input.addEventListener("input", updateTotals);
+        });
+
+        // Listen for clicks on remove buttons
+        removeButtons.forEach(button => {
+            button.addEventListener("click", removeItem);
+        });
+
+        // Initial calculation of totals
+        updateTotals();
+    }
+
+    // Initialize the cart when the page loads
+    document.addEventListener("DOMContentLoaded", initializeCart);
+</script>
+
+<body>
+    <div class="cart-container">
+        <h1>Shopping Cart</h1>
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="images/product1.jpg" alt="Product 1" class="cart-image"></td>
+                    <td>Elegant Blouse</td>
+                    <td><input type="number" value="1" min="1" class="quantity-input"></td>
+                    <td>$50</td>
+                    <td>$50</td>
+                    <td><button class="remove-btn">Remove</button></td>
+                </tr>
+                <tr>
+                    <td><img src="images/product2.jpg" alt="Product 2" class="cart-image"></td>
+                    <td>Classic Suit</td>
+                    <td><input type="number" value="1" min="1" class="quantity-input"></td>
+                    <td>$150</td>
+                    <td>$150</td>
+                    <td><button class="remove-btn">Remove</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="total-label">Grand Total:</td>
+                    <td colspan="2" class="grand-total">$200</td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="cart-actions">
+            <button class="update-cart">Update Cart</button>
+            <button class="checkout">Checkout</button>
+        </div>
+    </div>
+</body>
+</html>

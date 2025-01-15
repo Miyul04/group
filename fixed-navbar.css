@@ -1,0 +1,36 @@
+.navbar {
+  background-color: #ffffff; /* Changes background color to white */
+  position: fixed; /* Makes the navbar fixed */
+  top: 0; /* Positions the navbar at the top */
+  width: 99.8%; /* Ensures it spans the full width */
+  z-index: 1000; /* Ensures it stays above other elements */
+  border-bottom: 10px solid #ccc; /* Optional: Adds a subtle border for separation */
+}
+
+.navbar a {
+  display: block;
+  color: #333333; /* Updates text color to dark for contrast */
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  color: red; /* Darker text color on hover */
+}
+
+.main {
+  margin-top: 50px; /* Adjusts for the fixed navbar height */
+  height: 1500px; /* Example height to enable scrolling */
+}
+
+.search {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px; 
+}
+
+.m{
+	color: white;
+}
